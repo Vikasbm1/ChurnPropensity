@@ -1,0 +1,27 @@
+name: Run Papermill Notebook
+
+on:
+  push:
+    branches: [ master ]  # ✅ Use 'master' since that's your branch
+  workflow_dispatch:
+
+jobs:
+  run-notebook:
+    runs-on: self-hosted  # ✅ Ensure your self-hosted runner is configured
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install papermill jupyter
+
+      - name: Run Papermill script
+        run: |
+          python3 notebook_PM.py
