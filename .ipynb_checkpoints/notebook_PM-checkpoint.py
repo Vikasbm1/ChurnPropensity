@@ -1,13 +1,15 @@
 import papermill as pm
 import datetime
 import os
-import tempfile
 from google.cloud import storage
 
 # Define parameters
 bucket_name = "churn-model-prediction"
 source_blob_name = "Telecom-Customer-Churn.csv"
-destination_file_name = os.path.join(tempfile.gettempdir(), "Telecom-Customer-Churn.csv")
+
+# Use a writable local directory
+os.makedirs("tmp", exist_ok=True)
+destination_file_name = os.path.join("tmp", "Telecom-Customer-Churn.csv")
 
 # Function to download blob from GCS
 def download_blob(bucket_name, source_blob_name, destination_file_name):
