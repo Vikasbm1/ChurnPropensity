@@ -2,18 +2,19 @@ name: Run Papermill Notebook
 
 on:
   push:
-    branches: [ master ]  # ✅ Use 'master' since that's your branch
+    branches: [ master ]
   workflow_dispatch:
 
 jobs:
   run-notebook:
-    runs-on: self-hosted  # ✅ Ensure your self-hosted runner is configured
+    runs-on: self-hosted
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # ✅ Removed setup-python since it's not compatible with your self-hosted Debian 11 runner
+      - name: Print working directory
+        run: pwd && ls -R
 
       - name: Install dependencies
         run: |
@@ -23,3 +24,9 @@ jobs:
       - name: Run Papermill script
         run: |
           python3 notebook_PM.py
+
+      - name: Upload executed notebook
+        uses: actions/upload-artifact@v3
+        with:
+          name: executed-notebooks
+          path: executed_notebooks/
