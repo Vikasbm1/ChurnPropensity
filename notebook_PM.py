@@ -11,6 +11,9 @@ source_blob_name = "Telecom-Customer-Churn.csv"
 os.makedirs("tmp", exist_ok=True)
 destination_file_name = os.path.join("tmp", "Telecom-Customer-Churn.csv")
 
+# Ensure output directory exists
+os.makedirs("executed_notebooks", exist_ok=True)
+
 # Function to download blob from GCS
 def download_blob(bucket_name, source_blob_name, destination_file_name):
     storage_client = storage.Client()
@@ -25,6 +28,7 @@ download_blob(bucket_name, source_blob_name, destination_file_name)
 # Create timestamped output path
 timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
 output_path = f"executed_notebooks/modelPrototype_1_output_{timestamp}.ipynb"
+print(f"Saving executed notebook to: {output_path}")
 
 # Execute the notebook with parameters
 pm.execute_notebook(
